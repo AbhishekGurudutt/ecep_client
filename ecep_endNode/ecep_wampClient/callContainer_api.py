@@ -84,15 +84,29 @@ def callContainer(data):
     if data['command'] == 'stop':
         cmd['container'] = data['containerName']
 
-        #global threads
-        
-        
         response['success'] = container.stop_container(cmd)
 
         if response['success']:
             response['status'] = 'Stopped'
         else:
             response['status'] = 'Stop failed'
+
+
+    # to dowload a log file
+    if data['command'] == 'download':
+        fetch_kwargs = {'container': data['containerName'], 'container_path': data['container_path']}
+
+        execFile = addFile_toContainer.addFile()
+        file = execFile.fetch_results_using_cp(**fetch_kwargs)
+
+        put_kwargs = {'local_path': file, 'containerName': data['containerName']}
+
+        if put_kwargs == None:
+            put_kwargs['isFile'] = False
+        else:
+            put_kwargs['isFile'] = True
+
+        response['success'] = fetcher.put_file(**put_kwargs)
 
     return response
 

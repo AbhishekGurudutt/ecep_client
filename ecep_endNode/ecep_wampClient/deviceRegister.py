@@ -26,7 +26,7 @@ def init(device):
     Initialize client side wamp
     """
     global client
-    client = wampserver(device)
+    client = wampclient(device)
 
 
 # decorator for threads

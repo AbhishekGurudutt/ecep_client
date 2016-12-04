@@ -65,7 +65,7 @@ class ClientReader(ApplicationSession):
             print("could not subscribe to topic:" + self.topic + " : " + e)
 
 
-class wampserver(ApplicationSession):
+class wampclient(ApplicationSession):
     def __init__(self, device):
         self._topicRead = None
         self._debug = False
@@ -143,7 +143,7 @@ if __name__ == '__main__':
     realm = u'realm1'
 
     device = 'beaglebone'
-    server = wampserver(device)
+    server = wampclient(device)
     check = server.connect(ip, port, realm)
 
     while True:
